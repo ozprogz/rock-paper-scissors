@@ -1,73 +1,81 @@
+/*First Javascript project - little coding experience through university 
+ This project is part of the The Odin Project curriculum*/
+
 // randomly generated answer for rock paper scissors
 function computerPlay(){
     random = Math.random();
-    if(random <=0.33333333) return "Rock";
-    else if(random >0.33333333 && random <=0.66666666) return "Paper";
-    else return "Scissors";
+    if(random <=0.33333333) return "rock";
+    else if(random >0.33333333 && random <=0.66666666) return "paper";
+    else return "scissors";
 }
 // compares the player input and the answer of the computer
 function playRound(playerSelection, computerSelection){
-        /*/if(playerSelection == "Rock" && computerSelection == "Rock"){
-            console.log("It is a tie!")
-        }
-        if(playerSelection == "Rock" && computerSelection == "Paper"){
-            console.log("You lose!")
-        }
-        if(playerSelection == "Rock" && computerSelection == "Scissors"){
-            console.log("You win!")
-        }
-        if(playerSelection == "Paper" && computerSelection == "Paper"){
-            console.log("It is a tie!")
-        }
-        if(playerSelection == "Paper" && computerSelection == "Scissors"){
-            console.log("You lose!")
-        }
-        if(playerSelection == "Paper" && computerSelection == "Rock"){
-            console.log("You win!")
-        }
-        */
+        let player=0;
+        let computer=0;
        switch(playerSelection){
             
-           case "Rock":
-            if(computerSelection == "Rock"){
-                
-                console.log("It is a tie!")
+           case "rock":
+            
+            if(computerSelection == "paper"){
+                return "Computer wins"
             }
-            else if(computerSelection == "Paper"){
-                console.log("You lose!")
+            else if (computerSelection == "scissors"){
+                return "Player wins"
+            }
+            break;
 
+            case "paper":
+            if(computerSelection == "rock"){
+                return "Player wins"
             }
-            else {
-                console.log("You win!")
-            }
-            break;
-            case "Paper":
-            if(computerSelection == "Rock"){
-                console.log("You win!")
-            }
-            else if(computerSelection == "Paper"){
-                console.log("It is a tie!")
-            }
-            else {
-                console.log("You lose!")
+            else if(computerSelection == "scissors"){
+                return "Computer wins"
             }
             break;
-            case "Scissors":
-            if(computerSelection == "Rock"){
-                console.log("You lose!")
+
+            case "scissors":
+            if(computerSelection == "rock"){
+                return "Computer wins"
             }
-            else if(computerSelection == "Paper"){
-                console.log("You win!")
-            }
-            else {
-                console.log("It is a tie!")
+            else if(computerSelection == "paper"){
+                return "Player wins"
             }
             break;
+            default:
+                console.log("invalid input");
        }
 }
+//playing one game for 5 rounds
+function game(){
+    
+        while(playerWins < 5 && computerWins <5){
+            let playerSelection = prompt("Rock, Paper, Scissors?");
+            //putting the input in lowercase and checking if the input is valid. Could make a new function for this segment
+            if(playerSelection==null) continue;
+            let computerSelection = computerPlay();
+            playerSelection = playerSelection.toLowerCase();
+            if(playerSelection=="rock" || playerSelection== "paper" || playerSelection== "scissors"){
+            console.log(`Player picked ${playerSelection}\n` + `Computer picked ${computerSelection}`)
+            //checking who won the round. Could also be a function by itself to declutter, make it more readable
+            if(playRound(playerSelection, computerSelection)=="Player wins"){
+                playerWins++;
+                console.log(`You won the round! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
+            }
+            else if(playRound(playerSelection, computerSelection)=="Computer wins"){
+                computerWins++;
+                console.log(`You lost the round! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
+            }
+            else console.log(`It is a tie! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
+        }
+        
+        else alert("Invalid answer!"); 
+        }
+        if(playerWins>computerWins){
+            console.log("Congratulations!!! You won the game")
+        }
+        else console.log("You lost, Clown!");
+}
 
-
-let playerSelection = prompt("Rock, Paper, Scissors?");
-let computerSelection = computerPlay();
-console.log(`Player picked ${playerSelection}\n` + `Computer picked ${computerSelection}`)
-playRound(playerSelection, computerSelection);
+let playerWins = 0;
+let computerWins = 0;
+game();
