@@ -9,73 +9,106 @@ function computerPlay(){
     else return "scissors";
 }
 // compares the player input and the answer of the computer
-function playRound(playerSelection, computerSelection){
-        let player=0;
-        let computer=0;
-       switch(playerSelection){
-            
-           case "rock":
-            
-            if(computerSelection == "paper"){
-                return "Computer wins"
-            }
-            else if (computerSelection == "scissors"){
-                return "Player wins"
-            }
-            break;
+function playRound(button){
+        
+    let computerSelection= computerPlay();
 
+    const playerScore = document.querySelector("#player-score");
+    const computerScore = document.querySelector("#computer-score");
+    const result = document.querySelector("#result");
+    playerScore.textContent = `Player score: ${playerWins}`;
+    computerScore.textContent = `Computer score: ${computerWins}`;
+      
+    while(playerWins < 5 && computerWins <5){
+       switch(button.target.id){
+            
+            case "rock":
+                if(computerSelection == "paper"){
+                    computerWins++;
+                    result.textContent="Computer wins this round!";
+                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    return computerWins;
+                                   
+            }
+                else if (computerSelection == "scissors"){
+                    playerWins++;
+                    result.textContent="Player wins this round!";
+                    playerScore.textContent = `Player score: ${playerWins}`;
+                    return playerWins;
+                    
+            }
+                else {
+                    result.textContent="Draw!";
+                    return;
+                    
+            }
+            
             case "paper":
-            if(computerSelection == "rock"){
-                return "Player wins"
-            }
-            else if(computerSelection == "scissors"){
-                return "Computer wins"
-            }
-            break;
-
+                if(computerSelection == "rock"){
+                    playerWins++;
+                    result.textContent="Player wins this round!";
+                    playerScore.textContent = `Player score: ${playerWins}`;
+                    return playerWins;
+                }
+                else if(computerSelection == "scissors"){
+                    computerWins++;
+                    result.textContent="Computer wins this round!";
+                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    return computerWins;
+                }
+                else {
+                    result.textContent="Draw!";
+                    return;}
             case "scissors":
-            if(computerSelection == "rock"){
-                return "Computer wins"
-            }
-            else if(computerSelection == "paper"){
-                return "Player wins"
-            }
-            break;
-            default:
-                console.log("invalid input");
-       }
-}
-//playing one game for 5 rounds
-function game(){
-    
-        while(playerWins < 5 && computerWins <5){
-            let playerSelection = prompt("Rock, Paper, Scissors?");
-            //putting the input in lowercase and checking if the input is valid. Could make a new function for this segment
-            if(playerSelection==null) continue;
-            let computerSelection = computerPlay();
-            playerSelection = playerSelection.toLowerCase();
-            if(playerSelection=="rock" || playerSelection== "paper" || playerSelection== "scissors"){
-            console.log(`Player picked ${playerSelection}\n` + `Computer picked ${computerSelection}`)
-            //checking who won the round. Could also be a function by itself to declutter, make it more readable
-            if(playRound(playerSelection, computerSelection)=="Player wins"){
-                playerWins++;
-                console.log(`You won the round! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
-            }
-            else if(playRound(playerSelection, computerSelection)=="Computer wins"){
-                computerWins++;
-                console.log(`You lost the round! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
-            }
-            else console.log(`It is a tie! The score is now: \nPlayer:${playerWins} - Computer:${computerWins}`)
+        
+                if(computerSelection == "rock"){
+                    computerWins++;
+                    result.textContent="Computer wins this round!";
+                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    return computerWins;
+                }
+                else if(computerSelection == "paper"){
+                    playerWins++;
+                    result.textContent="Player wins this round!";
+                    playerScore.textContent = `Player score: ${playerWins}`;
+                    return playerWins; 
+                }
+                else {result.textContent="Draw!";
+                return;}
         }
         
-        else alert("Invalid answer!"); 
         }
-        if(playerWins>computerWins){
-            console.log("Congratulations!!! You won the game")
-        }
-        else console.log("You lost, Clown!");
-}
+         
+    }     
+    
+
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) =>{
+    button.addEventListener("click", game)
+    
+});
 
 let playerWins = 0;
 let computerWins = 0;
-game();
+
+
+function game(button){
+    let counter = playRound(button);
+    if(counter == 5){
+        if(playerWins>computerWins){
+            alert("Congratulations!!! You won the game")
+        }
+        else alert("You lost, Clown!"); 
+        const playAgain = document.createElement("button");
+        const content = document.querySelector('body');
+        playAgain.textContent ="Play again";
+        content.appendChild(playAgain);
+        playAgain.addEventListener("click", refreshPage);
+    }
+    
+}
+
+function refreshPage(){
+    window.location.reload()
+}
