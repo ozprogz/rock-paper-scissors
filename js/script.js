@@ -12,28 +12,37 @@ function computerPlay(){
 function playRound(button){
         
     let computerSelection= computerPlay();
-
     const playerScore = document.querySelector("#player-score");
     const computerScore = document.querySelector("#computer-score");
     const result = document.querySelector("#result");
-    playerScore.textContent = `Player score: ${playerWins}`;
-    computerScore.textContent = `Computer score: ${computerWins}`;
-      
+    
     while(playerWins < 5 && computerWins <5){
+        
+        const playerPick = document.createElement("div");
+        const computerPick = document.createElement("div");
+        const resultRound = document.createElement("div");
+        const content = document.querySelector('.picks');
+        playerPick.textContent =`${button.target.id}`;
+        computerPick.textContent =`${computerSelection}`;
+        resultRound.appendChild(playerPick);
+        resultRound.appendChild(computerPick);
+        resultRound.classList.add("rounds");
+        content.appendChild(resultRound);
+        
        switch(button.target.id){
             
             case "rock":
                 if(computerSelection == "paper"){
                     computerWins++;
                     result.textContent="Computer wins this round!";
-                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    computerScore.textContent = `${computerWins}`;
                     return computerWins;
                                    
             }
                 else if (computerSelection == "scissors"){
                     playerWins++;
                     result.textContent="Player wins this round!";
-                    playerScore.textContent = `Player score: ${playerWins}`;
+                    playerScore.textContent = `${playerWins}`;
                     return playerWins;
                     
             }
@@ -47,13 +56,13 @@ function playRound(button){
                 if(computerSelection == "rock"){
                     playerWins++;
                     result.textContent="Player wins this round!";
-                    playerScore.textContent = `Player score: ${playerWins}`;
+                    playerScore.textContent = `${playerWins}`;
                     return playerWins;
                 }
                 else if(computerSelection == "scissors"){
                     computerWins++;
                     result.textContent="Computer wins this round!";
-                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    computerScore.textContent = `${computerWins}`;
                     return computerWins;
                 }
                 else {
@@ -64,13 +73,13 @@ function playRound(button){
                 if(computerSelection == "rock"){
                     computerWins++;
                     result.textContent="Computer wins this round!";
-                    computerScore.textContent = `Computer score: ${computerWins}`;
+                    computerScore.textContent = `${computerWins}`;
                     return computerWins;
                 }
                 else if(computerSelection == "paper"){
                     playerWins++;
                     result.textContent="Player wins this round!";
-                    playerScore.textContent = `Player score: ${playerWins}`;
+                    playerScore.textContent = `${playerWins}`;
                     return playerWins; 
                 }
                 else {result.textContent="Draw!";
@@ -101,8 +110,8 @@ function game(button){
         }
         else alert("You lost, Clown!"); 
         const playAgain = document.createElement("button");
-        const content = document.querySelector('body');
-        playAgain.textContent ="Play again";
+        const content = document.querySelector('.container');
+        playAgain.classList.add("play-again")
         content.appendChild(playAgain);
         playAgain.addEventListener("click", refreshPage);
     }
